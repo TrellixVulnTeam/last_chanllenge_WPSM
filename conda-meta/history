@@ -1,0 +1,36 @@
+==> 2022-01-22 19:33:58 <==
+# cmd: /home/jaehun/anaconda3/bin/conda create -n last_chanllenge python=3.9
+# conda version: 4.10.1
++defaults/linux-64::_libgcc_mutex-0.1-main
++defaults/linux-64::_openmp_mutex-4.5-1_gnu
++defaults/linux-64::ca-certificates-2021.10.26-h06a4308_2
++defaults/linux-64::certifi-2021.10.8-py39h06a4308_2
++defaults/linux-64::ld_impl_linux-64-2.35.1-h7274673_9
++defaults/linux-64::libffi-3.3-he6710b0_2
++defaults/linux-64::libgcc-ng-9.3.0-h5101ec6_17
++defaults/linux-64::libgomp-9.3.0-h5101ec6_17
++defaults/linux-64::libstdcxx-ng-9.3.0-hd4cf53a_17
++defaults/linux-64::ncurses-6.3-h7f8727e_2
++defaults/linux-64::openssl-1.1.1m-h7f8727e_0
++defaults/linux-64::pip-21.2.4-py39h06a4308_0
++defaults/linux-64::python-3.9.7-h12debd9_1
++defaults/linux-64::readline-8.1.2-h7f8727e_1
++defaults/linux-64::setuptools-58.0.4-py39h06a4308_0
++defaults/linux-64::sqlite-3.37.0-hc218d9a_0
++defaults/linux-64::tk-8.6.11-h1ccaba5_0
++defaults/linux-64::xz-5.2.5-h7b6447c_0
++defaults/linux-64::zlib-1.2.11-h7f8727e_4
++defaults/noarch::tzdata-2021e-hda174b7_0
++defaults/noarch::wheel-0.37.1-pyhd3eb1b0_0
+# update specs: ['python=3.9']
+==> 2022-01-22 19:36:56 <==
+# cmd: /home/jaehun/anaconda3/bin/conda install Flask
+# conda version: 4.10.1
++defaults/linux-64::markupsafe-2.0.1-py39h27cfd23_0
++defaults/noarch::click-8.0.3-pyhd3eb1b0_0
++defaults/noarch::dataclasses-0.8-pyh6d0b6a4_7
++defaults/noarch::flask-2.0.2-pyhd3eb1b0_0
++defaults/noarch::itsdangerous-2.0.1-pyhd3eb1b0_0
++defaults/noarch::jinja2-3.0.2-pyhd3eb1b0_0
++defaults/noarch::werkzeug-2.0.2-pyhd3eb1b0_0
+# update specs: ['flask']
