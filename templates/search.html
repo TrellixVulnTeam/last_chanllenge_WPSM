@@ -14,19 +14,28 @@
         justify-content: flex-start;
         align-items: center;
       }
+      div {
+        width: 60vw;
+        height: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
     </style>
   </head>
   <body>
     <section>
       <h1>Remote Jobs</h1>
-      <h3>100 react jobs found.</h3>
-      <a href="/export?">export to CSV</a>
+      <h3>{{resultsNumber}} react jobs found.</h3>
+      <a href="/export?term={{search}}">export to CSV</a>
       <a href="/">← Go back</a>
-      <form action="/search" method="get">
-        <h2>Search by term:</h2>
-        <input placeholder="검색" required name="term" />
-        <button>Find my job</button>
-      </form>
+      {%for job in jobs%} {% for i in range(job)%}
+      <div>
+        <h3>{{job[i].title}}</h3>
+        <h3>{{job[i].company}}</h3>
+        <a href="{{job[i].link}}" target="_blank">Apply</a>
+      </div>
+      {%endfor%} {% endfor %}
     </section>
   </body>
 </html>

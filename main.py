@@ -1,41 +1,22 @@
+import csv
 from bs4 import BeautifulSoup
 import requests
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, send_file
 from flask.templating import render_template
-from remoteok import get_remote_jobs
-from stackoverflow import get_stack_jobs
-from wework import get_wework_jobs
 
 app = Flask('searchApp')
 
 fakeDB = {}
 
 
-@app.route('/')
-def home():
-    return render_template('home.html')
+def save_to_file(jobs, term):
+    file = open(f'{term}.csv', mode='w')
+    writer = csv.writer(file)
+    writer.writerow(['title', 'company', 'link'])
 
-
-@app.route('/search')
-def search():
-    term = request.args.get('term')
-    if term:
-        term = term.lower()
-        DB = fakeDB.get(term)
-        if DB:
-            jobs = DB
-        else:
-            stack = get_stack_jobs(term)
-            wework = get_wework_jobs(term)
-            remoteok = get_remote_jobs(term)
-            jobs = {'stack': stack, 'wework': wework, 'remoteok': remoteok}
-            fakeDB[term] = jobs
-    else:
-        redirect('/')
-    return render_template('search.html', search=term, resultsNumber=len(stack) + len(wework) + len(remoteok), jobs=jobs)
-
-
-app.run(host='127.0.0.1')
+    for job in jobs:
+        for i in range(job):
+            writer.writerow(list(job[i].values()))
 
 
 def get_wework_jobs(term):
@@ -51,7 +32,7 @@ def get_wework_jobs(term):
         link = f'{URL}{jobs_link}'
         get_category(URL, link, jobs_list)
 
-    print(jobs_list)
+    # print(jobs_list)
     return jobs_list
 
 
@@ -62,7 +43,7 @@ def get_category(URL, link, jobs_list):
         'li', {'class': 'feature'})
     for job in jobs:
         link = job.find_all('a')[-1]['href']
-        print(link)
+        # print(link)
         company = job.find('span', {'class': 'company'}).get_text(strip=True)
         title = job.find('span', {'class': 'title'}).get_text(strip=True)
         jobs_list.append(
@@ -106,6 +87,45 @@ def get_remote_jobs(term):
     return job_list
 
 
-# get_wework_jobs('react')
-# get_stack_jobs('react')
-# get_remote_jobs('react')
+@app.route('/')
+def home():
+    return render_template('home.html')
+
+
+@app.route('/search')
+def search():
+    term = request.args.get('term')
+    if term:
+        term = term.lower()
+        DB = fakeDB.get(term)
+        if DB:
+            jobs = DB
+        else:
+            stack = get_stack_jobs(term)
+            wework = get_wework_jobs(term)
+            remoteok = get_remote_jobs(term)
+            jobs = {'stack': stack, 'wework': wework, 'remoteok': remoteok}
+            fakeDB[term] = jobs
+    else:
+        redirect('/')
+    return render_template('search.html', search=term, resultsNumber=len(stack) + len(wework) + len(remoteok), jobs=jobs)
+
+
+@app.route('/export')
+def export():
+    try:
+        term = request.args.get('term')
+        if not term:
+            raise Exception()
+        term = term.lower()
+        jobs = fakeDB.get(term)
+        if not jobs:
+            raise Exception()
+
+        save_to_file(jobs)
+        return send_file(f'{term}.csv')
+    except:
+        return redirect('/')
+
+
+app.run(host='127.0.0.1')
